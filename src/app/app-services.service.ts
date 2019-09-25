@@ -160,7 +160,16 @@ console.log(this.apiUrl)
     return this.http.post(this.apiUrl + 'api/v1/Respuesta_Archi_Deter', params, { headers: headers });
 
   }
+  borrarArchivoDeterminado(id: string): Observable<any> {
 
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/Respuesta_Archi_Deter/' + id, { headers: headers });
+
+  }
   getMandamientos(page: number, limit: number): Observable<any> {
     const jwt = localStorage.getItem('JWT');
     const headers = new HttpHeaders().set('x-access-token', jwt);

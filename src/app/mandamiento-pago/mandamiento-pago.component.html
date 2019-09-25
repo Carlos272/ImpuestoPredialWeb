@@ -8,7 +8,7 @@
         <mat-card>
           <mat-card-header>
             <mat-card-title>
-              Mandamiento de pago
+              Mandamiento de Pago
             </mat-card-title>
             <mat-card-subtitle>
               Datos de generales para la creación del mandamiento de pago.
@@ -16,7 +16,7 @@
           </mat-card-header>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
-              <input required matInput placeholder="Número" maxlength="20" formControlName="numero">
+              <input required matInput placeholder="Número de Pago" maxlength="20" formControlName="numero">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
               <input required matInput placeholder="Ciudad" maxlength="20" formControlName="ciudad">
@@ -29,7 +29,7 @@
                   formControlName="expediente">
               </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Referencia C"
+              <input required type="number" maxlength="10" matInput placeholder="Referencia Catastral"
                 formControlName="referenciaC">
             </mat-form-field>
           </div>
@@ -38,7 +38,7 @@
               <input type="text" maxlength="50" matInput placeholder="Dirección" formControlName="direccion">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Propietario"
+              <input required type="text" maxlength="10" matInput placeholder="Propietario"
                 formControlName="propietario">
             </mat-form-field>
           </div>
@@ -48,6 +48,12 @@
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
               <input type="text" maxlength="200" matInput placeholder="Valor" formControlName="valor">
+            </mat-form-field>
+            <mat-form-field fxFlex fxFlex.xs>
+              <mat-select required placeholder="Notificacion de mensajeria" formControlName="notificacion">
+                <mat-option *ngFor="let notificacion of notificacions" [value]="notificacion._id">{{
+                  notificacion.Empresa_mensajeria }}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </mat-card>

@@ -39,7 +39,7 @@ export class MandamientoPagoComponent implements OnInit {
   public  pageIndex = 0;
   public  pageSize  = 5;
   public length: number;
-
+  public notificacions;
   registerUserForm = new FormGroup({
     numero: new FormControl(''),
     ciudad: new FormControl(''),
@@ -49,7 +49,7 @@ export class MandamientoPagoComponent implements OnInit {
     notificacion: new FormControl(''),
     propietario: new FormControl(''),
     resolucion: new FormControl(''),
-    valor: new FormControl(''),
+    valor: new FormControl('')
 
   });
 
@@ -100,5 +100,12 @@ export class MandamientoPagoComponent implements OnInit {
 
         }); 
  }
+ getNotificacion() {
+  this.appService.getNotificacionMensajeria(1, 1000).subscribe(res => {
+    this.notificacions = res.message.docs;
+  }, err => {
+    console.log(err);
+  });
+}
 
 }

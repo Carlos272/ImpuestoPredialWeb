@@ -31,16 +31,16 @@ export class HomeComponent implements OnInit {
       case 'Admin':
         this.navModel = [
           new NavModel('/home/dashboard', 'Inicio', 'home'),
-          new NavModel('/home/archivo-determinado', 'Archivo determinado', 'account_circle'),
+          new NavModel('/home/archivo-determinado', 'Respuesta de Archivo de Determinación', 'account_circle'),
           new NavModel('/home/mandamientos', 'Mandamientos', 'account_circle'),
-          new NavModel('/home/mandamientos-pago', 'Mandamientos de pago', 'account_circle'),
-          new NavModel('/home/notificacion-correspondencia', 'Notificación de correspondencia', 'account_circle'),
-          new NavModel('/home/notificacion-embargo', 'Notificación de embargo', 'account_circle'),
-          new NavModel('/home/notificacion-mensajeria', 'Notificación de mensajería', 'account_circle'),
-          new NavModel('/home/resolucion-vigente', 'Resolución vigente', 'account_circle'),
-          new NavModel('/home/resolucion-convenio-pago', 'Resolución de convenio de pago', 'account_circle'),
-          new NavModel('/home/solicitud-abogado', 'Solicitud abogado', 'account_circle'),
-          new NavModel('/home/about', 'Acerca de', 'help'),
+          new NavModel('/home/mandamientos-pago', 'Mandamientos de Pago', 'account_circle'),
+          new NavModel('/home/notificacion-correspondencia', 'Notificación de Correspondencia', 'account_circle'),
+          new NavModel('/home/notificacion-embargo', 'Notificación de Embargo', 'account_circle'),
+          new NavModel('/home/notificacion-mensajeria', 'Notificación de Mensajería', 'account_circle'),
+          new NavModel('/home/resolucion-vigente', 'Resolución Vigente', 'account_circle'),
+          new NavModel('/home/resolucion-convenio-pago', 'Resolución de Convenio de Pago', 'account_circle'),
+          new NavModel('/home/solicitud-abogado', 'Solicitud Abogado', 'account_circle'),
+         // new NavModel('/home/about', 'Acerca de', 'help'),
         ];
         break;
 
