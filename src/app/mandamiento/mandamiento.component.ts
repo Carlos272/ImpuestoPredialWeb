@@ -3,7 +3,7 @@ import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AppService } from '../app-services.service';
 import { MandamientoModel } from '../model/MandamientoModel';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import { MandamientoDialogComponent } from '../dialog/mandamiento-dialog/mandamiento-dialog.component';
 export interface PeriodicElement {
   name: string;
@@ -45,11 +45,11 @@ export class MandamientoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.geNotificacion();
+    this.getNotificacion();
     this.listMandamientoFirst();
   }
 
-  geNotificacion() {
+  getNotificacion() {
     this.appService.getNotificacionMensajeria(1, 1000).subscribe(res => {
       this.notificacions = res.message.docs;
     }, err => {
@@ -116,7 +116,7 @@ export class MandamientoComponent implements OnInit {
       });
   }
 
-  openDialogEdit(id: string, mandamiento: any): void {
+  openDialogEdit( mandamiento: any): void {
  console.log()
        const dialogRef = this.dialog.open(MandamientoDialogComponent, {
       data: [mandamiento, false],
@@ -130,7 +130,7 @@ export class MandamientoComponent implements OnInit {
 
   }
 
-  deleteMandamiento(id: string, operator: any): void {
+  deleteMandamiento(id: string): void {
     this.appService.borrarMandamiento(id).subscribe(res => {
     this.openSnackBar('Mandamiento eliminado.', 'Aceptar');  
       this.listMandamientoFirst(); 
