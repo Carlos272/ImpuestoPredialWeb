@@ -1,4 +1,4 @@
-<form [formGroup]="registerUserForm">
+<form #formDirective="ngForm" [formGroup]="registerUserForm">
   <div class="grid-container">
 
 
@@ -14,6 +14,7 @@
               Datos de generales para la creación del mandamiento.
             </mat-card-subtitle>
           </mat-card-header>
+
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
               <input required matInput placeholder="Número" maxlength="20" formControlName="numero">
@@ -24,13 +25,11 @@
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Expediente"
-                formControlName="expediente">
+              <input required type="number" maxlength="10" matInput placeholder="Expediente" formControlName="expediente">
             </mat-form-field>
 
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Referencia C"
-                formControlName="referenciaC">
+              <input required type="number" maxlength="10" matInput placeholder="Referencia C" formControlName="referenciaC">
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
@@ -38,16 +37,21 @@
               <input type="text" maxlength="50" matInput placeholder="Dirección" formControlName="direccion">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Propietario"
-                formControlName="propietario">
+              <input required type="number" maxlength="10" matInput placeholder="Propietario" formControlName="propietario">
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
-              <input type="text" maxlength="200" matInput placeholder="Resolución" formControlName="resolucion">
+              <input required type="text" maxlength="200" matInput placeholder="Resolución" formControlName="resolucion">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-              <input type="text" maxlength="200" matInput placeholder="Valor" formControlName="valor">
+              <input required type="text" maxlength="200" matInput placeholder="Valor" formControlName="valor">
+            </mat-form-field>
+            <mat-form-field fxFlex fxFlex.xs>
+              <mat-select required placeholder="Notificacion de mensajeria" formControlName="notificacion">
+                <mat-option *ngFor="let notificacion of notificacions" [value]="notificacion._id">{{
+                  notificacion.Empresa_mensajeria }}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </mat-card>
@@ -71,7 +75,7 @@
 
             <!-- Position Column -->
             <ng-container matColumnDef="numero">
-              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <th mat-header-cell *matHeaderCellDef> No. de Pago </th>
               <td mat-cell *matCellDef="let element"> {{element.Mandamiento_de_pago_No}} </td>
             </ng-container>
 
@@ -87,12 +91,47 @@
               <td mat-cell *matCellDef="let element"> {{element.ReferenciaC}} </td>
             </ng-container>
 
+
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="resolucion">
+              <th mat-header-cell *matHeaderCellDef> Resolucion </th>
+              <td mat-cell *matCellDef="let element"> {{element.Resolucion}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="propietario">
+              <th mat-header-cell *matHeaderCellDef> Propietario </th>
+              <td mat-cell *matCellDef="let element"> {{element.Propietario}} </td>
+            </ng-container>
+
             <!-- Symbol Column -->
             <ng-container matColumnDef="ciudad">
               <th mat-header-cell *matHeaderCellDef> Ciudad </th>
               <td mat-cell *matCellDef="let element"> {{element.Ciudad}} </td>
             </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="valor">
+              <th mat-header-cell *matHeaderCellDef> Valor </th>
+              <td mat-cell *matCellDef="let element"> {{element.Valor}} </td>
+            </ng-container>
 
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Accion</th>
+              <td mat-cell *matCellDef="let element">
+                  <!--
+              <button mat-icon-button color="accent"  matTooltip="Editar" (click)="openDialogEdit(element._id, element)" >
+                  <mat-icon>create</mat-icon>
+                </button>
+
+                  -->
+               
+               <button mat-icon-button color="accent" matTooltip="Eliminar" (click)="deleteMandamiento(element._id)" >
+                 <mat-icon>clear</mat-icon> 
+                </button>
+              </td>
+            </ng-container>
+  
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>

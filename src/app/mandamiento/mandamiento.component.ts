@@ -1,68 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AppService } from '../app-services.service';
 import { MandamientoModel } from '../model/MandamientoModel';
-
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MandamientoDialogComponent } from '../dialog/mandamiento-dialog/mandamiento-dialog.component';
 export interface PeriodicElement {
   name: string;
   position: number;
   weight: number;
   symbol: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: '123456', weight: 1.0079, symbol: 'Cartagena'},
-  {position: 2, name: '123456', weight: 4.0026, symbol: 'Cartagena'},
-  {position: 3, name: '123456', weight: 6.941, symbol: 'Barranquilla'},
-  {position: 4, name: '123456', weight: 9.0122, symbol: 'Santa Marta'},
-  {position: 5, name: '123456', weight: 10.811, symbol: 'Medellín'},
-  {position: 6, name: '123456', weight: 12.0107, symbol: 'Cali'},
-  {position: 7, name: '123456', weight: 14.0067, symbol: 'Cúcuta'},
-  {position: 8, name: '123456', weight: 15.9994, symbol: 'Bucaramanga'},
-  {position: 9, name: '123456', weight: 18.9984, symbol: 'Manizales'},
-  {position: 10, name: '123456', weight: 20.1797, symbol: 'Cartagena'},
-];
-
 @Component({
   selector: 'app-mandamiento',
   templateUrl: './mandamiento.component.html',
   styleUrls: ['./mandamiento.component.css']
 })
 export class MandamientoComponent implements OnInit {
-  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  displayedColumns: string[] = ['numero', 'expediente', 'referencia', 'ciudad'];
-  // dataSource = ELEMENT_DATA;
+  @ViewChild('formDirective') private formDirective: NgForm;
+  displayedColumns: string[] = ['numero', 'expediente', 'referencia','resolucion', 'propietario', 'ciudad', 'valor',  'actions'];
   dataSource: MandamientoModel | null;
   public  pageIndex = 0;
   public  pageSize  = 5;
   public length: number;
 
+  public notificacions;
   registerUserForm = new FormGroup({
     numero: new FormControl(''),
     ciudad: new FormControl(''),
     expediente: new FormControl(''),
     referenciaC: new FormControl(''),
     direccion: new FormControl(''),
-    notificacion: new FormControl(''),
     propietario: new FormControl(''),
     resolucion: new FormControl(''),
     valor: new FormControl(''),
+    notificacion: new FormControl(''),
 
   });
-
-
-
   constructor(
     private appService: AppService,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
 
   ) { }
 
   ngOnInit() {
-    this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    this.geNotificacion();
+    this.listMandamientoFirst();
   }
 
+  geNotificacion() {
+    this.appService.getNotificacionMensajeria(1, 1000).subscribe(res => {
+      this.notificacions = res.message.docs;
+    }, err => {
+      console.log(err);
+    });
+  }
   list(event) {
     const {pageIndex = 0, pageSize = 5} = event;
     this.appService.getMandamientos(pageIndex + 1, pageSize ).subscribe(res => {
@@ -93,12 +86,57 @@ export class MandamientoComponent implements OnInit {
 
      this.appService.guardarMandamiento(mandamientoModel).subscribe(
          response => {
-           alert('El usuario ha sido creado exitosamente');
+          this.openSnackBar('Mandamiento creado exitosamente.', 'Aceptar');   
+        this.formDirective.resetForm();  
          },
          error => {
-           alert(error.message.message);
-
+          this.openSnackBar('Error no ha podido guardarse mandamiento.', 'Aceptar');
          }); 
   }
 
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 12000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
+  }
+
+  listMandamientoFirst() {
+
+    this.appService.getMandamientos(this.pageIndex + 1, this.pageSize ).subscribe(res => {
+      
+      const mandamientos = res.message.docs;
+     this.dataSource = mandamientos;
+      this.length = res.message.total;
+
+    }, err => {
+
+      console.log(err);
+      });
+  }
+
+  openDialogEdit(id: string, mandamiento: any): void {
+ console.log()
+       const dialogRef = this.dialog.open(MandamientoDialogComponent, {
+      data: [mandamiento, false],
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.listMandamientoFirst();
+    });
+
+
+  }
+
+  deleteMandamiento(id: string, operator: any): void {
+    this.appService.borrarMandamiento(id).subscribe(res => {
+    this.openSnackBar('Mandamiento eliminado.', 'Aceptar');  
+      this.listMandamientoFirst(); 
+    }, err => {
+      this.openSnackBar('Error.', 'Aceptar');  
+      console.log(err);
+    });
+  }
 }

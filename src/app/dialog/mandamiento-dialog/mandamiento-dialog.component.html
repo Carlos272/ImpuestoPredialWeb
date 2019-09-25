@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Editar Mandamiento</h1>
+
+<mat-dialog-content>
+
+  <form name="EditarMandamiento" #EditarMandamiento="ngForm">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required matInput placeholder="Número" maxlength="20"   name="Mandamiento_de_pago_No" [(ngModel)]="mandamiento.Mandamiento_de_pago_No">
+      </mat-form-field>
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required matInput placeholder="Ciudad" maxlength="20 "   name="Ciudad" [(ngModel)]="mandamiento.Ciudad">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required type="number" maxlength="10" matInput placeholder="Expediente"  name="Expediente" [(ngModel)]="mandamiento.Expediente">
+      </mat-form-field>
+
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required type="number" maxlength="10" matInput placeholder="Referencia C"  name="ReferenciaC" [(ngModel)]="mandamiento.ReferenciaC">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <mat-form-field fxFlex fxFlex.xs>
+        <input type="text" maxlength="50" matInput placeholder="Dirección"   name="Direccion" [(ngModel)]="mandamiento.Direccion">
+      </mat-form-field>
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required type="number" maxlength="10" matInput placeholder="Propietario"  name="Propietario" [(ngModel)]="mandamiento.Propietario">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required type="text" maxlength="200" matInput placeholder="Resolución"  name="Resolucion" [(ngModel)]="mandamiento.Resolucion">
+      </mat-form-field>
+      <mat-form-field fxFlex fxFlex.xs>
+        <input required type="text" maxlength="200" matInput placeholder="Valor"   name="valor" [(ngModel)]="mandamiento.valor">
+      </mat-form-field>
+      <mat-form-field fxFlex fxFlex.xs>
+        <mat-select required placeholder="Notificacion de mensajeria"   name="Notificacion" [(ngModel)]="mandamiento.Notificacion" >
+          <mat-option *ngFor="let notificacion of notificacions" [value]="notificacion._id">{{
+            notificacion.Empresa_mensajeria }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+ 
+  <button mat-button mat-raised-button color="accent" (click)="onSubmit_edit()">
+    Editar mandamiento
+  </button>
+  <button mat-button  mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+</mat-dialog-actions>

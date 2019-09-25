@@ -15,6 +15,7 @@ import {MatButtonModule,
   MatMenuModule,
   MatSelectModule,
   MatPaginatorModule,
+  MatSnackBarModule,
   MatIconModule} from '@angular/material';
 
 
@@ -36,6 +37,7 @@ import {MatButtonModule,
     MatMenuModule,
     MatSelectModule,
     MatPaginatorModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -55,6 +57,7 @@ import {MatButtonModule,
     MatMenuModule,
     MatSelectModule,
     MatPaginatorModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialComponentsDefinitionModule { }

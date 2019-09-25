@@ -31,6 +31,7 @@ import { SolicitudAbogadoComponent } from './solicitud-abogado/solicitud-abogado
 import { ArchivoDeterminadoComponent } from './archivo-determinado/archivo-determinado.component';
 import { ResolucionVigenteComponent } from './resolucion-vigente/resolucion-vigente.component';
 import { ResolucionConvenioPagoComponent } from './resolucion-convenio-pago/resolucion-convenio-pago.component';
+import { MandamientoDialogComponent } from './dialog/mandamiento-dialog/mandamiento-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ResolucionConvenioPagoComponent } from './resolucion-convenio-pago/reso
     SolicitudAbogadoComponent,
     ArchivoDeterminadoComponent,
     ResolucionVigenteComponent,
-    ResolucionConvenioPagoComponent
+    ResolucionConvenioPagoComponent,
+    MandamientoDialogComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -68,6 +70,10 @@ import { ResolucionConvenioPagoComponent } from './resolucion-convenio-pago/reso
     MatSidenavModule,
     MatIconModule,
     MatListModule
+  ],
+  entryComponents: [
+    MandamientoDialogComponent
+
   ],
   providers: [
     AuthGuard,

@@ -23,6 +23,16 @@ export class AppService {
   }
   apiUrl: string;
 
+
+  guardarUsuario(user:any): Observable<any> {
+console.log(this.apiUrl)
+    const params = JSON.stringify(user);
+  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.post(this.apiUrl + 'api/v1/user/register', params, { headers: headers });
+
+  }
+
   guardarMandamiento(mandamiento: MandamientoModel): Observable<any> {
 
     const params = JSON.stringify(mandamiento);
@@ -35,6 +45,27 @@ export class AppService {
 
   }
 
+ actulizarMandamiento( id: string, mandamiento: MandamientoModel): Observable<any> {
+
+    const params = JSON.stringify(mandamiento);
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.put(this.apiUrl + 'api/v1/Mandamientos/update/' + id, params, { headers: headers });
+
+  }
+  borrarMandamiento(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/Mandamientos/' + id, { headers: headers });
+
+  }
   guardarMandamientoPago(mandamientoPago: MandamientoPagoModel): Observable<any> {
 
     const params = JSON.stringify(mandamientoPago);
