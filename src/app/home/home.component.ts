@@ -30,11 +30,11 @@ export class HomeComponent implements OnInit {
     switch (user) {
       case 'Admin':
         this.navModel = [
-          new NavModel('/home/dashboard', 'Inicio', 'home'),
+         // new NavModel('/home/dashboard', 'Inicio', 'home'),
           new NavModel('/home/archivo-determinado', 'Respuesta de Archivo de Determinación', 'account_circle'),
           new NavModel('/home/mandamientos', 'Mandamientos', 'account_circle'),
           new NavModel('/home/mandamientos-pago', 'Mandamientos de Pago', 'account_circle'),
-          new NavModel('/home/notificacion-correspondencia', 'Notificación de Correspondencia', 'account_circle'),
+          new NavModel('/home/notificacion-correspondencia', 'Notificación por Correo', 'account_circle'),
           new NavModel('/home/notificacion-embargo', 'Notificación de Embargo', 'account_circle'),
           new NavModel('/home/notificacion-mensajeria', 'Notificación de Mensajería', 'account_circle'),
           new NavModel('/home/resolucion-vigente', 'Resolución Vigente', 'account_circle'),

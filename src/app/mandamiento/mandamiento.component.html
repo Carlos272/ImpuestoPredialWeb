@@ -29,7 +29,7 @@
             </mat-form-field>
 
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Referencia C" formControlName="referenciaC">
+              <input required type="number" maxlength="10" matInput placeholder="Referencia Catastral" formControlName="referenciaC">
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
@@ -48,7 +48,7 @@
               <input required type="text" maxlength="200" matInput placeholder="Valor" formControlName="valor">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-              <mat-select required placeholder="Notificacion de mensajeria" formControlName="notificacion">
+              <mat-select required placeholder="Notificacion de Mensajeria" formControlName="notificacion">
                 <mat-option *ngFor="let notificacion of notificacions" [value]="notificacion._id">{{
                   notificacion.Empresa_mensajeria }}</mat-option>
               </mat-select>

@@ -77,7 +77,16 @@ console.log(this.apiUrl)
     return this.http.post(this.apiUrl + 'api/v1/MandamientosPago', params, { headers: headers });
 
   }
+  borrarMandamientoPago(id: string): Observable<any> {
 
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/MandamientosPago/' + id, { headers: headers });
+
+  }
   guardarSolicitudAbogado(solicitudAbogado: SolicitudAbogadoModel): Observable<any> {
 
     const params = JSON.stringify(solicitudAbogado);

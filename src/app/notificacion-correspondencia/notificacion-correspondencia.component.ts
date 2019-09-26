@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+
 import { AppService } from '../app-services.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material'
+import { MatDialog } from '@angular/material';
 import { NotificacionCorrespondenciaModel } from '../model/NotificacionCorrespondenciaModel';
 
 @Component({
@@ -9,6 +12,7 @@ import { NotificacionCorrespondenciaModel } from '../model/NotificacionCorrespon
   styleUrls: ['./notificacion-correspondencia.component.css']
 })
 export class NotificacionCorrespondenciaComponent implements OnInit {
+  @ViewChild('formDirective') private formDirective: NgForm;
   displayedColumns: string[] = ['ciudad', 'nombre', 'referencia', 'propietario', 'acciones'];
   dataSource: NotificacionCorrespondenciaModel | null;
 
@@ -17,7 +21,8 @@ export class NotificacionCorrespondenciaComponent implements OnInit {
   public length: number;
 
   constructor(
-    private appService: AppService
+    private appService: AppService,
+    private snackBar: MatSnackBar
   ) { }
 
   registerUserForm = new FormGroup({
@@ -31,6 +36,7 @@ export class NotificacionCorrespondenciaComponent implements OnInit {
 
   ngOnInit() {
     this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    this.listFirst();
   }
 
   list(event) {
@@ -47,6 +53,19 @@ export class NotificacionCorrespondenciaComponent implements OnInit {
 
       });
   }
+  listFirst() {
+
+    this.appService.getNotificacionCorrespondencia(this.pageIndex + 1, this.pageSize).subscribe(res => {
+
+      const correo = res.message.docs;
+      this.dataSource = correo;
+      this.length = res.message.total;
+
+    }, err => {
+
+      console.log(err);
+    });
+  }
 
   save() {
 
@@ -60,24 +79,29 @@ export class NotificacionCorrespondenciaComponent implements OnInit {
 
     this.appService.guardarNotificacionCorrespondencia(notificacionCorrespondenciaModel).subscribe(
         response => {
-          this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
-
-          alert('La notificación de correspondencia ha sido creada exitosamente');
+          this.openSnackBar('La notificación por Correo ha sido creada exitosamente', 'Aceptar');    
+          this.formDirective.resetForm();   
         },
         error => {
-          alert(error.message.message);
+        
+          this.openSnackBar('Error al crear la notificacion', 'Aceptar');  
 
         }); 
  }
 
  delete(id: string): void {
   this.appService.borrarNotificacionCorrespondencia(id).subscribe(res => {
-
-  this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    this.listFirst();
   }, err => {
     console.log(err);
   });
 }
 
-
+openSnackBar(message: string, action: string) {
+  this.snackBar.open(message, action, {
+    duration: 12000,
+    horizontalPosition: 'center',
+    verticalPosition: 'top'
+  });
+}
 }
