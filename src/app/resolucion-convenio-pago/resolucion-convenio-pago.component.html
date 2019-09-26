@@ -15,89 +15,97 @@
           </mat-card-header>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
-              <input required matInput placeholder="Número de resolución" maxlength="20" formControlName="Resolucion_No">
+              <input required matInput placeholder="Número de resolución" maxlength="20"
+                formControlName="Resolucion_No">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
               <input required matInput placeholder="Número de convenio" maxlength="20" formControlName="No_de_Convenio">
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-            
+
             <mat-form-field fxFlex fxFlex.xs>
               <input required type="number" maxlength="10" matInput placeholder="Referencia"
                 formControlName="Referencia">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-                <input required type="number" maxlength="10" matInput placeholder="Nombre"
-                  formControlName="Nombre">
-              </mat-form-field>
+              <input required type="number" maxlength="10" matInput placeholder="Nombre" formControlName="Nombre">
+            </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
               <input type="text" maxlength="50" matInput placeholder="Valor" formControlName="Valor">
             </mat-form-field>
             <mat-form-field fxFlex fxFlex.xs>
-              <input required type="number" maxlength="10" matInput placeholder="Fecha"
-                formControlName="Fecha">
+              <input required type="number" maxlength="10" matInput placeholder="Fecha" formControlName="Fecha">
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex fxFlex.xs>
               <input type="text" maxlength="200" matInput placeholder="Número de cuotas" formControlName="No_de_Cuotas">
             </mat-form-field>
-            
+
           </div>
         </mat-card>
         <br>
         <div fxLayoutAlign="start start" fxLayoutGap="10px">
-          <button mat-button type="reset" *ngIf="isEdit == false ">Limpiar</button>
           <button mat-button mat-raised-button color="primary" [disabled]="registerUserForm.invalid" (click)="save()">
             Guardar resolución de pago
           </button>
-          <button mat-button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+          <button mat-button type="reset" >Limpiar</button>
 
         </div>
       </mat-tab>
 
-      <mat-tab label="Listado"> 
+      <mat-tab label="Listado">
         <div fxLayout="row">
-            <table mat-table fxFlex [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table fxFlex [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <!--- Note that these columns can be defined in any order.
+            <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
-              
-                <!-- Position Column -->
-                <ng-container matColumnDef="numero">
-                  <th mat-header-cell *matHeaderCellDef> Numero de resolución. </th>
-                  <td mat-cell *matCellDef="let element"> {{element.Resolucion_No}} </td>
-                </ng-container>
-              
-                <!-- Name Column -->
-                <ng-container matColumnDef="convenio">
-                  <th mat-header-cell *matHeaderCellDef> Número de convenio </th>
-                  <td mat-cell *matCellDef="let element"> {{element.No_de_Convenio}} </td>
-                </ng-container>
-              
-                <!-- Weight Column -->
-                <ng-container matColumnDef="nombre">
-                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                  <td mat-cell *matCellDef="let element"> {{element.Nombre}} </td>
-                </ng-container>
-              
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="valor">
-                  <th mat-header-cell *matHeaderCellDef> Valor </th>
-                  <td mat-cell *matCellDef="let element"> {{element.Valor}} </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="numero">
+              <th mat-header-cell *matHeaderCellDef> Numero de resolución. </th>
+              <td mat-cell *matCellDef="let element"> {{element.Resolucion_No}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="convenio">
+              <th mat-header-cell *matHeaderCellDef> Número de convenio </th>
+              <td mat-cell *matCellDef="let element"> {{element.No_de_Convenio}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> Nombre </th>
+              <td mat-cell *matCellDef="let element"> {{element.Nombre}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="valor">
+              <th mat-header-cell *matHeaderCellDef> Valor </th>
+              <td mat-cell *matCellDef="let element"> {{element.Valor}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent" matTooltip="Eliminar" (click)="delete(element._id)">
+                  <mat-icon>clear</mat-icon>
+                </button>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
         </div>
-          
+
         <mat-paginator [length]="length" [pageSizeOptions]="[5, 10, 20]" (page)="list($event)">
-          </mat-paginator>
-  
+        </mat-paginator>
+
       </mat-tab>
     </mat-tab-group>
 

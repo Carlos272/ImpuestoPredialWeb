@@ -87,4 +87,15 @@ export class SolicitudAbogadoComponent implements OnInit {
 
         }); 
   }
+
+
+  delete(id: string): void {
+    this.appService.borrarSolicitudAbogado(id).subscribe(res => {
+
+    this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    }, err => {
+      console.log(err);
+    });
+  }
+
 }

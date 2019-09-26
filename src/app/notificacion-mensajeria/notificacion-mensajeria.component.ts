@@ -3,32 +3,13 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../app-services.service';
 import { NotificacionMensajeriaModel } from '../model/NotificacionMensajeriaModel';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: '123456', weight: 1.0079, symbol: 'Cartagena'},
-  {position: 2, name: '123456', weight: 4.0026, symbol: 'Cartagena'},
-  {position: 3, name: '123456', weight: 6.941, symbol: 'Barranquilla'},
-  {position: 4, name: '123456', weight: 9.0122, symbol: 'Santa Marta'},
-  {position: 5, name: '123456', weight: 10.811, symbol: 'Medellín'},
-  {position: 6, name: '123456', weight: 12.0107, symbol: 'Cali'},
-  {position: 7, name: '123456', weight: 14.0067, symbol: 'Cúcuta'},
-  {position: 8, name: '123456', weight: 15.9994, symbol: 'Bucaramanga'},
-  {position: 9, name: '123456', weight: 18.9984, symbol: 'Manizales'},
-  {position: 10, name: '123456', weight: 20.1797, symbol: 'Cartagena'},
-];
 @Component({
   selector: 'app-notificacion-mensajeria',
   templateUrl: './notificacion-mensajeria.component.html',
   styleUrls: ['./notificacion-mensajeria.component.css']
 })
 export class NotificacionMensajeriaComponent implements OnInit {
-  displayedColumns: string[] = ['empresa', 'nombre', 'direccion', 'firma'];
+  displayedColumns: string[] = ['empresa', 'nombre', 'direccion', 'firma', 'acciones'];
   dataSource: NotificacionMensajeriaModel | null;
 
   public pageIndex = 0;
@@ -59,9 +40,7 @@ export class NotificacionMensajeriaComponent implements OnInit {
       this.length = res.message.total;
 
     }, err => {
-
-      console.log(err);
-
+      alert(err);
       });
   }
 
@@ -76,12 +55,23 @@ export class NotificacionMensajeriaComponent implements OnInit {
 
     this.appService.guardarNotificacionMensajeria(notificacionMensajeriaModel).subscribe(
         response => {
+          this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
           alert('La notificación de mensajería ha sido creada exitosamente');
+
         },
         error => {
           alert(error.message.message);
 
         }); 
+  }
+
+  delete(id: string): void {
+    this.appService.borrarNotificacionMensajeria(id).subscribe(res => {
+
+    this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

@@ -258,4 +258,71 @@ console.log(this.apiUrl)
     });
   }
 
+  borrarNotificacionMensajeria(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/notificacion_mensajeria/' + id, { headers: headers });
+
+  }
+
+  borrarNotificacionEmbargo(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/Notificacion_Emba/' + id, { headers: headers });
+
+  }
+
+  borrarResolucionConvenioPago(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/Resoluciones_Conve_Pag/' + id, { headers: headers });
+
+  }
+
+  borrarResolucionVigente(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/Resoluciones_Vigen/' + id, { headers: headers });
+
+  }
+
+  borrarSolicitudAbogado(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/Solicitud_Abo/' + id, { headers: headers });
+
+  }
+
+  borrarNotificacionCorrespondencia(id: string): Observable<any> {
+
+    const jwt = localStorage.getItem('JWT');
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('x-access-token', jwt);
+
+    return this.http.delete(this.apiUrl + 'api/v1/NotificacionCorrespondencia/' + id, { headers: headers });
+
+  }
+
+
 }

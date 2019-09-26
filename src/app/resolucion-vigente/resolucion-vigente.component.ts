@@ -30,7 +30,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ResolucionVigenteComponent implements OnInit {
 
-  displayedColumns: string[] = ['numero', 'nombre', 'referencia', 'valor'];
+  displayedColumns: string[] = ['numero', 'nombre', 'referencia', 'valor', 'acciones'];
   dataSource: ResolucionVigenteModel | null;
 
   public pageIndex = 0;
@@ -69,17 +69,19 @@ export class ResolucionVigenteComponent implements OnInit {
   save() {
 
     let resolucionVigenteModel: ResolucionVigenteModel  = {
-      Resoluciones_No: this.registerUserForm.value.Resolucion_No,
-      Nombre: this.registerUserForm.value.No_de_Convenio,
+      Resoluciones_No: this.registerUserForm.value.Resoluciones_No,
+      Nombre: this.registerUserForm.value.Nombre,
       Referencia: this.registerUserForm.value.Direccion,
-      Matricula: this.registerUserForm.value.Nombre,
-      Direccion: this.registerUserForm.value.Valor,
-      Valor: this.registerUserForm.value.Fecha,
+      Matricula: this.registerUserForm.value.Matricula,
+      Direccion: this.registerUserForm.value.Direccion,
+      Valor: this.registerUserForm.value.Valor,
       
     };
 
     this.appService.guardarResolucionVigente(resolucionVigenteModel).subscribe(
         response => {
+          this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+
           alert('Resolución vigente ha sido creada exitosamente');
         },
         error => {
@@ -87,5 +89,16 @@ export class ResolucionVigenteComponent implements OnInit {
 
         }); 
   }
+
+
+  delete(id: string): void {
+    this.appService.borrarResolucionVigente(id).subscribe(res => {
+
+    this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    }, err => {
+      console.log(err);
+    });
+  }
+
 
 }

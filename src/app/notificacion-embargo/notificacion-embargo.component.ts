@@ -10,7 +10,7 @@ import { NotificacionEmbargoModel } from '../model/NotificacionEmbargoModel';
 })
 export class NotificacionEmbargoComponent implements OnInit {
   
-  displayedColumns: string[] = ['expediente', 'nombre', 'numeroResolucion', 'matricula'];
+  displayedColumns: string[] = ['expediente', 'nombre', 'numeroResolucion', 'matricula', 'acciones'];
   dataSource: NotificacionEmbargoModel | null;
 
   public pageIndex = 0;
@@ -65,4 +65,14 @@ export class NotificacionEmbargoComponent implements OnInit {
 
         }); 
   }
+
+  delete(id: string): void {
+    this.appService.borrarNotificacionEmbargo(id).subscribe(res => {
+
+    this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+    }, err => {
+      console.log(err);
+    });
+  }
+
 }
