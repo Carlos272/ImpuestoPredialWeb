@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../app-services.service';
 import { NotificacionMensajeriaModel } from '../model/NotificacionMensajeriaModel';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-notificacion-mensajeria',
@@ -24,7 +25,9 @@ export class NotificacionMensajeriaComponent implements OnInit {
   });
   
   constructor(
-    private appService: AppService
+    private appService: AppService,
+    private snackBar: MatSnackBar
+
   ) { }
 
   ngOnInit() {
@@ -56,7 +59,7 @@ export class NotificacionMensajeriaComponent implements OnInit {
     this.appService.guardarNotificacionMensajeria(notificacionMensajeriaModel).subscribe(
         response => {
           this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
-          alert('La notificación de mensajería ha sido creada exitosamente');
+          this.openSnackBar('La notificación de mensajería ha sido creada exitosamente', 'Aceptar');    
 
         },
         error => {
@@ -71,6 +74,14 @@ export class NotificacionMensajeriaComponent implements OnInit {
     this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
     }, err => {
       console.log(err);
+    });
+  }
+  
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 12000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
     });
   }
 

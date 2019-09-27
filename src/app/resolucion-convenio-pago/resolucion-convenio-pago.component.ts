@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../app-services.service';
 import { ResolucionConvenioPagoModel } from '../model/ResolucionConvenioPagoModel';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-resolucion-convenio-pago',
@@ -28,7 +29,8 @@ export class ResolucionConvenioPagoComponent implements OnInit {
     
   });
   constructor(
-    private appService: AppService
+    private appService: AppService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -67,9 +69,9 @@ export class ResolucionConvenioPagoComponent implements OnInit {
 
     this.appService.guardarResolucionConvenioPago(resolucionConvenioPagoModel).subscribe(
         response => {
-        this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+          this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
+          this.openSnackBar('Resolución de convenio de pago ha sido creada exitosamente', 'Aceptar');    
 
-          alert('Resolución de convenio de pago ha sido creada exitosamente');
         },
         error => {
           alert(error.message.message);
@@ -85,6 +87,13 @@ export class ResolucionConvenioPagoComponent implements OnInit {
       console.log(err);
     });
   }
-
+  
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 12000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
+  }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../app-services.service';
 import { SolicitudAbogadoModel } from '../model/SolicitudAbogadoModel';
+import { MatSnackBar } from '@angular/material';
 
 export interface PeriodicElement {
   name: string;
@@ -44,7 +45,9 @@ export class SolicitudAbogadoComponent implements OnInit {
 
   });
   constructor(
-    private appService: AppService
+    private appService: AppService,
+    private snackBar: MatSnackBar
+
   ) { }
 
   ngOnInit() {
@@ -80,7 +83,8 @@ export class SolicitudAbogadoComponent implements OnInit {
 
     this.appService.guardarSolicitudAbogado(solicitudAbogadoModel).subscribe(
         response => {
-          alert('Resolución de convenio de pago ha sido creada exitosamente');
+          this.openSnackBar('Solicitud de abogado ha sido creada exitosamente', 'Aceptar');    
+
         },
         error => {
           alert(error.message.message);
@@ -95,6 +99,14 @@ export class SolicitudAbogadoComponent implements OnInit {
     this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
     }, err => {
       console.log(err);
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 12000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
     });
   }
 

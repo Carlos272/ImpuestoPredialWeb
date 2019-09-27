@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../app-services.service';
 import { NotificacionEmbargoModel } from '../model/NotificacionEmbargoModel';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-notificacion-embargo',
@@ -26,7 +27,9 @@ export class NotificacionEmbargoComponent implements OnInit {
   });
   
   constructor(
-    private appService: AppService
+    private appService: AppService,
+    private snackBar: MatSnackBar
+
   ) { }
 
   ngOnInit() {
@@ -58,7 +61,7 @@ export class NotificacionEmbargoComponent implements OnInit {
 
     this.appService.guardarNotificacionEmbargo(notificacionEmbargoModel).subscribe(
         response => {
-          alert('La notificación de embargo ha sido creado exitosamente');
+          this.openSnackBar('La notificación de embargo ha sido creado exitosamente', 'Aceptar');    
         },
         error => {
           alert(error.message.message);
@@ -72,6 +75,14 @@ export class NotificacionEmbargoComponent implements OnInit {
     this.list({pageIndex: this.pageIndex, pageSize: this.pageSize});
     }, err => {
       console.log(err);
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 12000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
     });
   }
 
